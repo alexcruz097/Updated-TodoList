@@ -2,7 +2,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-font-family: 'Courier New', Courier, monospace;}
+  font-family: "Courier New", Courier, monospace;
+}
 body {
   background-color: #c6d1c2;
 }
@@ -22,21 +23,20 @@ body {
   border-radius: 1rem;
   border: none;
   background-color: #f5f5f5;
-  
 }
-#menu-header{
+#menu-header {
   font-size: 1.4rem;
 }
-#menu-list li{
-margin: 1rem 0;
+#menu-list li {
+  margin: 1rem 0;
 }
-#menu-list a{
+#menu-list a {
   text-decoration: none;
   color: black;
   list-style: none;
 }
 /* todo container style */
-.list-container{
+.list-container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: auto;
@@ -46,12 +46,70 @@ margin: 1rem 0;
   border: 1px solid black;
   border-radius: 1rem;
 }
-.todo{  
-min-height: 20vh;
-border-radius: 1rem;
-color: white;
-list-style: none;
-padding: 1rem;
-background-color: #92a073;
-font-size: larger;
+.todo {
+  position: relative;
+  min-height: 20vh;
+  border-radius: 1rem;
+  color: white;
+  list-style: none;
+  padding: 1rem;
+  background-color: #92a073;
+  font-size: larger;
+}
+.editBTN {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+}
+.deleteBTN {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+}
+
+#add-btn {
+  background-color: #f5f5f5;
+  color: black;
+  font-size: 6rem;
+  border: none;
+}
+#add-btn:hover {
+  cursor: pointer;
+}
+
+/* delete button styel */
+.deleteBTN {
+  background: #ff4742;
+  border: 1px solid #ff4742;
+}
+.editBTN {
+  background-color: blue;
+  border: 1px solid blue;
+}
+.deleteBTN,
+.editBTN {
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+}
+
+.deleteBTN:active {
+  opacity: 0.5;
 }
