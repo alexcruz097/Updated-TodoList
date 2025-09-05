@@ -21,13 +21,16 @@
       <div class="notes-section">
         <h1>Sticky Todo</h1>
         <ol class="list-container">
-          <li class="todo">
-            Go to the gym by 10 pm<button class="editBTN">Edit</button>
-            <button class="deleteBTN">Delete</button>
-          </li>
-          <button class="addBTN todo" id="add-btn">+</button>
         </ol>
+        <button class="show-form todo" id="add-btn">+</button>
       </div>
+      <form class="todo-form">
+        <label for="todo">Add Todo</label>
+        <input type="text" name="todo" id="todo-form" />
+        <label for="date">Due Date</label>
+        <input type="date" name="date" id="todo-date" />
+        <button class="add-btn">Submit</button>
+      </form>
     </div>
   </body>
   <script src="index.js"></script>
