@@ -3,7 +3,8 @@ const addBTN = document.querySelector(".add-btn");
 // form
 const todoText = document.querySelector("#todo-form");
 const todoDateInput = document.querySelector("#todo-date");
-
+const todoForm = document.querySelector(".todo-form")
+const showFormBTN = document.querySelector(".show-form-btn")
 const todoList = [];
 
 // create random color
@@ -14,15 +15,20 @@ const randomColor = () => {
   return `rgb(${r}, ${g} ,${b})`;
 };
 
-const showForm = () => {};
+const showForm = () => {
+todoForm.classList.toggle("show-form")
+todoForm.classList.toggle("hide-form")
+};
+
+
 const createBTN = (className, innerText) => {
   let editBTN = document.createElement("button");
   editBTN.classList.add(className);
   editBTN.textContent = innerText;
   return editBTN;
 };
-// create item Template
-const todoItem = (todoText, date) => {
+// create todo Template
+const todoTemplate = (todoText, date) => {
   // create li
   let Li = document.createElement("li");
   Li.classList.add("todo");
@@ -35,7 +41,7 @@ const todoItem = (todoText, date) => {
   p.classList.add("due-date");
   p.textContent = `Due: ${date}`;
   // append to LI
-  Li.textContent = todoText.textContent;
+  Li.textContent = todoText;
   Li.appendChild(editBTN);
   Li.appendChild(p);
   Li.appendChild(deleteBTN);
@@ -45,6 +51,7 @@ const todoItem = (todoText, date) => {
 
 const createTodo = (e) => {
   e.preventDefault();
+  // get textt
   // get date and format it
   const dateObject = new Date(todoDateInput.value);
   let dueDate = dateObject.toLocaleDateString();
@@ -54,17 +61,18 @@ const createTodo = (e) => {
     dueDate: dueDate,
     completed: false,
   });
+
   // append new item into the pate
-
-  let listItem = todoItem(todoText.value, dueDate);
-  console.log(listItem);
-  listContainer.appendChild(todoItem(listItem));
-
+  let listItem = todoTemplate(todoText.value, dueDate);
+  listContainer.appendChild(listItem);
   // clear form
   todoText.value = "";
   todoDateInput.valueAsDate = null;
-};
 
+  // hide form 
+  showForm()
+};
+showFormBTN.addEventListener("click", showForm)
 addBTN.addEventListener("click", createTodo);
 
 //append to the page
