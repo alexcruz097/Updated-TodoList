@@ -1,10 +1,11 @@
 const listContainer = document.querySelector(".list-container");
 const addBTN = document.querySelector(".add-btn");
+const removeBTN = document.querySelector(".deleteBTN");
 // form
 const todoText = document.querySelector("#todo-form");
 const todoDateInput = document.querySelector("#todo-date");
-const todoForm = document.querySelector(".todo-form")
-const showFormBTN = document.querySelector(".show-form-btn")
+const todoForm = document.querySelector(".todo-form");
+const showFormBTN = document.querySelector(".show-form-btn");
 const todoList = [];
 
 // create random color
@@ -16,10 +17,9 @@ const randomColor = () => {
 };
 
 const showForm = () => {
-todoForm.classList.toggle("show-form")
-todoForm.classList.toggle("hide-form")
+  todoForm.classList.toggle("show-form");
+  todoForm.classList.toggle("hide-form");
 };
-
 
 const createBTN = (className, innerText) => {
   let editBTN = document.createElement("button");
@@ -28,7 +28,7 @@ const createBTN = (className, innerText) => {
   return editBTN;
 };
 // create todo Template
-const todoTemplate = (todoText, date) => {
+const todoTemplate = (todoText, date , id) => {
   // create li
   let Li = document.createElement("li");
   Li.classList.add("todo");
@@ -42,13 +42,13 @@ const todoTemplate = (todoText, date) => {
   p.textContent = `Due: ${date}`;
   // append to LI
   Li.textContent = todoText;
+  Li.id = id;
   Li.appendChild(editBTN);
   Li.appendChild(p);
   Li.appendChild(deleteBTN);
   return Li;
 };
 // create item and push to arr
-
 const createTodo = (e) => {
   e.preventDefault();
   // get textt
@@ -60,21 +60,44 @@ const createTodo = (e) => {
     text: todoText.value,
     dueDate: dueDate,
     completed: false,
+    id: todoList.length,
   });
-
+  console.log(todoList)
   // append new item into the pate
-  let listItem = todoTemplate(todoText.value, dueDate);
+  let listItem = todoTemplate(todoText.value, dueDate , todoList.id);
   listContainer.appendChild(listItem);
   // clear form
   todoText.value = "";
   todoDateInput.valueAsDate = null;
 
-  // hide form 
-  showForm()
+  // hide form
+  showForm();
 };
-showFormBTN.addEventListener("click", showForm)
+const updateTodo = ()=>{
+
+}
+const removeTodo = (e) => {
+  alert("click");
+};
+showFormBTN.addEventListener("click", showForm);
 addBTN.addEventListener("click", createTodo);
 
+listContainer.addEventListener("click", (e) => {
+  // delete Item
+  if (e.target.classList.contains("deleteBTN")) {
+    e.target.parentNode.remove();
+  }
+// edit item
+if(e.target.classList.contains("editBTN")){
+showForm();
+e.target.parentNode.innerHTML  = `${todoText}
+
+`
+
+
+}
+
+});
 //append to the page
 
 // const createItem = (e) => {
