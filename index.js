@@ -1,52 +1,45 @@
 const listContainer = document.querySelector(".list-container");
 const addBTN = document.querySelector(".add-btn");
 const removeBTN = document.querySelector(".deleteBTN");
+const editBTN = document.querySelector(".editBTN");
+
 // form
-const todoText = document.querySelector("#todo-form");
+const todoTextInput = document.querySelector("#todo-form");
 const todoDateInput = document.querySelector("#todo-date");
 const todoForm = document.querySelector(".todo-form");
-const addFormBTN = document.querySelector(".add-form-btn");
-const editBTN = document.querySelector(".editBTN");
-const editButtonForm = document.querySelector(".edit-btn");
+const addButtonSubmit = document.querySelector(".add-form-btn");
+const editButtonSubmit = document.querySelector(".edit-btn");
+
+const cancelForm = document.querySelector(".cancel-form");
 const todoList = [
-  { todo: "Go to work", dueDate: "02/15/2025", completed: false, id: "12324" },
   {
-    todo: "Go to the park",
-    dueDate: "5/25/2025",
+    todo: "Learn to Program",
+    dueDate: "02/15/2025",
     completed: false,
-    id: "7465745",
-  },
-  {
-    todo: "Go to program get a job",
-    dueDate: "4/29/2026",
-    completed: false,
-    id: "34564",
+    id: "12324",
   },
 ];
-
-// create random color
-const randomColor = () => {
-  let r = Math.floor(Math.random() * 155);
-  let g = Math.floor(Math.random() * 155);
-  let b = Math.floor(Math.random() * 155);
-  return `rgb(${r}, ${g} ,${b})`;
-};
 
 // dynamicaly two form
 const addForm = () => {
   todoForm.classList.toggle("show-form");
   todoForm.classList.toggle("hide-form");
   addBTN.style = "display: block";
-  editButtonForm.style = "display:none;";
+  editButtonSubmit.style = "display:none;";
 };
 
-const editForm = () => {
+const editForm = (e) => {
   todoForm.classList.toggle("show-form");
   todoForm.classList.toggle("hide-form");
   addBTN.style = "display:none;";
-  editButtonForm.style = "display:block;";
+  editButtonSubmit.style = "display:block;";
 };
-
+cancelForm.addEventListener("click", (e) => {
+  e.preventDefault();
+  addForm();
+});
+// =========template creation
+// create button
 const createBTN = (className, innerText) => {
   let editBTN = document.createElement("button");
   editBTN.classList.add(className);
@@ -54,7 +47,7 @@ const createBTN = (className, innerText) => {
   return editBTN;
 };
 // create todo Template
-const todoTemplate = (todoText, date, id) => {
+const todoTemplate = (todoTextInput, date, id) => {
   // create li
   let Li = document.createElement("li");
   Li.classList.add("todo");
@@ -65,14 +58,14 @@ const todoTemplate = (todoText, date, id) => {
   p.classList.add("due-date");
   p.textContent = `Due: ${date}`;
   // append to LI
-  Li.textContent = todoText;
+  Li.textContent = todoTextInput;
   Li.id = id;
   Li.appendChild(editBTN);
   Li.appendChild(p);
   Li.appendChild(deleteBTN);
   return Li;
 };
-//generate todo
+//generate todo function
 const generateTodo = () => {
   listContainer.innerHTML = "";
   todoList.map((todo) => {
@@ -87,12 +80,12 @@ const createTodo = (e) => {
   let randomID = Math.floor(
     Math.random() * Math.floor(Math.random() * Date.now())
   );
-  // get date and format it
-  const dateObject = new Date(todoDateInput.value);
+  // get dat, format it and make it local time zone
+  const dateObject = new Date(todoDateInput.value + "T00:00:00");
   let dueDate = dateObject.toLocaleDateString();
   // push new todo to the array
   let newTodo = {
-    todo: todoText.value,
+    todo: todoTextInput.value,
     dueDate: dueDate,
     completed: false,
     id: randomID,
@@ -101,27 +94,44 @@ const createTodo = (e) => {
   // after pushing generate todo
   generateTodo();
   // clear form
-  todoText.value = "";
+  todoTextInput.value = "";
   todoDateInput.valueAsDate = null;
 
   // hide form
   addForm();
 };
 
+// ================ Edit functionality
+let editID = "";
 const editTodo = () => {
-  alert("click");
+  const dateObject = new Date(todoDateInput.value + + "T00:00:00");
+  let dueDate = dateObject.toLocaleDateString();
+  todoList.map((todo) => {
+    if (todo.id == editID) {
+      (todo.todo = todoTextInput.value),
+        (todo.dueDate = dueDate),
+        (todo.completed = false),
+        (todo.id = editID);
+    }
+  });
+  // clear form
+  todoTextInput.value = "";
+  todoDateInput.valueAsDate = null;
+  // generate items
+  generateTodo();
+  // hideForm
+  addForm();
 };
 
-addFormBTN.addEventListener("click", addForm);
+addButtonSubmit.addEventListener("click", addForm);
 addBTN.addEventListener("click", createTodo);
-editButtonForm.addEventListener("click", (e) => {
+editButtonSubmit.addEventListener("click", (e) => {
   e.preventDefault();
   editTodo();
-  
 });
 
 listContainer.addEventListener("click", (e) => {
-  // delete Item
+  //=============== delete functionality
   if (e.target.classList.contains("deleteBTN")) {
     // remove item from the  arr
     todoList.map((todo, index) => {
@@ -134,7 +144,9 @@ listContainer.addEventListener("click", (e) => {
   }
   // edit item
   if (e.target.classList.contains("editBTN")) {
+    // show form
     editForm();
-    console.log(e.target.parentNode.id)
+    // update new todo
+    editID = e.target.parentNode.id;
   }
 });
