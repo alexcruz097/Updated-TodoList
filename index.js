@@ -11,14 +11,8 @@ const addButtonSubmit = document.querySelector(".add-form-btn");
 const editButtonSubmit = document.querySelector(".edit-btn");
 
 const cancelForm = document.querySelector(".cancel-form");
-const todoList = [
-  {
-    todo: "Learn to Program",
-    dueDate: "02/15/2025",
-    completed: false,
-    id: "12324",
-  },
-];
+// let todoList equal to local storage
+const todoList = JSON.parse(localStorage.getItem("todoList"));
 
 // dynamicaly two form
 const addForm = () => {
@@ -46,6 +40,12 @@ const createBTN = (className, innerText) => {
   editBTN.textContent = innerText;
   return editBTN;
 };
+
+const setLocalStorage = () => {
+  const todoList_serialized = JSON.stringify(todoList);
+  // push new item to local storage
+  return localStorage.setItem("todoList", todoList_serialized);
+};
 // create todo Template
 const todoTemplate = (todoTextInput, date, id) => {
   // create li
@@ -68,7 +68,9 @@ const todoTemplate = (todoTextInput, date, id) => {
 //generate todo function
 const generateTodo = () => {
   listContainer.innerHTML = "";
-  todoList.map((todo) => {
+  let todoList_deserialized = JSON.parse(localStorage.getItem("todoList"));
+  console.log(todoList_deserialized);
+  todoList_deserialized.map((todo) => {
     listContainer.appendChild(todoTemplate(todo.todo, todo.dueDate, todo.id));
   });
 };
@@ -91,6 +93,9 @@ const createTodo = (e) => {
     id: randomID,
   };
   todoList.push(newTodo);
+  // add new array to local storage
+  setLocalStorage();
+
   // after pushing generate todo
   generateTodo();
   // clear form
@@ -104,7 +109,7 @@ const createTodo = (e) => {
 // ================ Edit functionality
 let editID = "";
 const editTodo = () => {
-  const dateObject = new Date(todoDateInput.value + + "T00:00:00");
+  const dateObject = new Date(todoDateInput.value + "T00:00:00");
   let dueDate = dateObject.toLocaleDateString();
   todoList.map((todo) => {
     if (todo.id == editID) {
@@ -114,6 +119,9 @@ const editTodo = () => {
         (todo.id = editID);
     }
   });
+  // add new array to local storage
+  setLocalStorage();
+
   // clear form
   todoTextInput.value = "";
   todoDateInput.valueAsDate = null;
@@ -140,6 +148,8 @@ listContainer.addEventListener("click", (e) => {
       }
     });
     // remove item from the node
+    // update the local storage
+    setLocalStorage();
     e.target.parentNode.remove();
   }
   // edit item
