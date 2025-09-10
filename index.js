@@ -2,7 +2,7 @@ const listContainer = document.querySelector(".list-container");
 const addBTN = document.querySelector(".add-btn");
 const removeBTN = document.querySelector(".deleteBTN");
 const editBTN = document.querySelector(".editBTN");
-
+const completedBTN = document.querySelector(".Completed-filter-btn");
 // form
 const todoTextInput = document.querySelector("#todo-form");
 const todoDateInput = document.querySelector("#todo-date");
@@ -11,8 +11,11 @@ const addButtonSubmit = document.querySelector(".add-form-btn");
 const editButtonSubmit = document.querySelector(".edit-btn");
 
 const cancelForm = document.querySelector(".cancel-form");
+
+// filter buttons
+const filterBTNS = document.querySelector(".filter-list");
 // let todoList equal to local storage
-const todoList = JSON.parse(localStorage.getItem("todoList"));
+const todoList = JSON.parse(localStorage.getItem("todoList") || []);
 
 // dynamicaly two form
 const addForm = () => {
@@ -53,7 +56,8 @@ const todoTemplate = (todoTextInput, date, id) => {
   Li.classList.add("todo");
   // create edit/delete btn and p for date
   let editBTN = createBTN("editBTN", "Edit");
-  let deleteBTN = createBTN("deleteBTN", "Delete");
+  let deleteBTN = createBTN("deleteBTN", "X");
+  let completedBTN = createBTN("completedBTN", "Complete");
   let p = document.createElement("p");
   p.classList.add("due-date");
   p.textContent = `Due: ${date}`;
@@ -63,6 +67,7 @@ const todoTemplate = (todoTextInput, date, id) => {
   Li.appendChild(editBTN);
   Li.appendChild(p);
   Li.appendChild(deleteBTN);
+  Li.appendChild(completedBTN);
   return Li;
 };
 //generate todo function
@@ -127,6 +132,7 @@ const editTodo = () => {
   todoDateInput.valueAsDate = null;
   // generate items
   generateTodo();
+  f;
   // hideForm
   addForm();
 };
@@ -159,4 +165,31 @@ listContainer.addEventListener("click", (e) => {
     // update new todo
     editID = e.target.parentNode.id;
   }
+
+  //==================================== filter
+
+  // completed
+  if (e.target.classList.contains("completedBTN")) {
+    // iterate
+    todoList.map((todo, index) => {
+      if (todo.id == e.target.parentNode.id) {
+        todo.completed = true;
+      }
+    });
+    // update local storage
+    setLocalStorage()
+    console.log(localStorage.getItem("todoList"))
+  }
 });
+
+//==================================== filter
+filterBTNS.addEventListener("click", (e) => {
+  console.log(e.target);
+  // filter by today
+  if (e.target.classList.contains("today-filter")) {
+    alert("click today");
+  }
+});
+
+// ===========filter
+
