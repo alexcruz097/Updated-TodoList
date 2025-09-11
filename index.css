@@ -47,10 +47,11 @@ body {
   background-color: #ffffff;
   position: absolute;
 }
-.cancel-form {
+.cancel-form-btn {
   display: absolute;
+  top: 0;
 }
-.cancel-form:hover {
+.cancel-form-btn:hover {
   cursor: pointer;
 }
 /* todo container style */
@@ -84,8 +85,10 @@ body {
 .add-form-btn {
   width: 95%;
   font-size: 2rem;
-  background-color: #f5f5f5;
+  color: white;
+  background-color: #0095ff;
   border: 1px solid black;
+
   -webkit-border-top-left-radius: 12px;
   -webkit-border-top-right-radius: 12px;
   -moz-border-radius-topleft: 12px;
@@ -93,9 +96,8 @@ body {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
-.add-form-btn:hover{
+.add-form-btn:hover {
   cursor: pointer;
- 
 }
 .editBTN {
   position: absolute;
@@ -129,15 +131,21 @@ body {
   left: 0;
 } */
 /* delete button styel */
-.deleteBTN {
+.deleteBTN,
+.cancel-form-btn {
   background: #ff4742;
   border: 1px solid #ff4742;
+}
+.cancel-form-btn {
+  position: absolute;
+  right: 0;
 }
 .editBTN {
   background-color: blue;
   border: 1px solid blue;
 }
-.add-btn {
+.add-btn,
+.edit-btn {
   background-color: blue;
 }
 .completedBTN {
@@ -147,7 +155,9 @@ body {
 .deleteBTN,
 .editBTN,
 .add-btn,
-.completedBTN {
+.completedBTN,
+.cancel-form-btn,
+.edit-btn {
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
   box-sizing: border-box;
   color: #ffffff;
@@ -181,8 +191,6 @@ body {
 .hide-form {
   display: none;
 }
-.completed .todo{
-
+.completed-todo {
   background-color: red;
-
 }

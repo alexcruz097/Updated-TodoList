@@ -13,9 +13,9 @@
         <h4 id="menu-header">Menu</h4>
         <p>task</p>
         <ul class="filter-list">
-          <li><a href="#">Upcoming...</a></li>
-          <li><a href="#" class="today-filter-btn">Today</a></li>
-          <li><a href="#" class="Completed-filter-btn">Completed</a></li>
+          <li><a href="#" class="upcoming-filter">Upcoming...</a></li>
+          <li><a href="#" class="today-filter-btn">Due Today</a></li>
+          <li><a href="#" class="completed-filter-btn">Completed</a></li>
         </ul>
       </nav>
       <div class="notes-section">
@@ -35,12 +35,12 @@
       </div>
       <form class="todo-form hide-form">
         <label for="todo">Add Todo</label>
-        <input type="text" name="todo" id="todo-form" />
+        <input type="text" name="todo" id="todo-form" required />
         <label for="date">Due Date</label>
-        <input type="date" name="date" id="todo-date" />
+        <input type="date" name="date" id="todo-date" required />
         <button class="add-btn">Create Todo</button>
         <button class="edit-btn">Edit Todo</button>
-        <button class="cancel-form">X</button>
+        <button class="cancel-form-btn">X</button>
       </form>
     </div>
   </body>

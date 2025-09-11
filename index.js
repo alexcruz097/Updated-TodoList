@@ -2,7 +2,6 @@ const listContainer = document.querySelector(".list-container");
 const addBTN = document.querySelector(".add-btn");
 const removeBTN = document.querySelector(".deleteBTN");
 const editBTN = document.querySelector(".editBTN");
-const completedBTN = document.querySelector(".Completed-filter-btn");
 // form
 const todoTextInput = document.querySelector("#todo-form");
 const todoDateInput = document.querySelector("#todo-date");
@@ -10,7 +9,7 @@ const todoForm = document.querySelector(".todo-form");
 const addButtonSubmit = document.querySelector(".add-form-btn");
 const editButtonSubmit = document.querySelector(".edit-btn");
 
-const cancelForm = document.querySelector(".cancel-form");
+const cancelForm = document.querySelector(".cancel-form-btn");
 
 // filter buttons
 const filterBTNS = document.querySelector(".filter-list");
@@ -28,7 +27,7 @@ const addForm = () => {
 const editForm = (e) => {
   todoForm.classList.toggle("show-form");
   todoForm.classList.toggle("hide-form");
-  addBTN.style = "display:none;";
+  addBTN.style = "display: none;";
   editButtonSubmit.style = "display:block;";
 };
 cancelForm.addEventListener("click", (e) => {
@@ -38,10 +37,10 @@ cancelForm.addEventListener("click", (e) => {
 // =========template creation
 // create button
 const createBTN = (className, innerText) => {
-  let editBTN = document.createElement("button");
-  editBTN.classList.add(className);
-  editBTN.textContent = innerText;
-  return editBTN;
+  let createBTN = document.createElement("button");
+  createBTN.classList.add(className);
+  createBTN.textContent = innerText;
+  return createBTN;
 };
 
 const setLocalStorage = () => {
@@ -74,9 +73,11 @@ const todoTemplate = (todoTextInput, date, id) => {
 const generateTodo = () => {
   listContainer.innerHTML = "";
   let todoList_deserialized = JSON.parse(localStorage.getItem("todoList"));
-  console.log(todoList_deserialized);
+  // add a style if item is completed
   todoList_deserialized.map((todo) => {
-    listContainer.appendChild(todoTemplate(todo.todo, todo.dueDate, todo.id));
+    if (todo.completed == false) {
+      listContainer.appendChild(todoTemplate(todo.todo, todo.dueDate, todo.id));
+    }
   });
 };
 window.onload = generateTodo;
@@ -90,51 +91,67 @@ const createTodo = (e) => {
   // get dat, format it and make it local time zone
   const dateObject = new Date(todoDateInput.value + "T00:00:00");
   let dueDate = dateObject.toLocaleDateString();
-  // push new todo to the array
-  let newTodo = {
-    todo: todoTextInput.value,
-    dueDate: dueDate,
-    completed: false,
-    id: randomID,
-  };
-  todoList.push(newTodo);
-  // add new array to local storage
-  setLocalStorage();
 
-  // after pushing generate todo
-  generateTodo();
-  // clear form
-  todoTextInput.value = "";
-  todoDateInput.valueAsDate = null;
+  // add validation to input
+  if (todoTextInput.value === "" && todoDateInput.value === "") {
+    alert(`please input both: Todo and DueDate`);
+  } else if (todoTextInput.value === "") {
+    alert(`please type what is your Todo`);
+  } else if (todoDateInput.value === "") {
+    alert("Please input your due date for your task.");
+  } else {
+    let newTodo = {
+      todo: todoTextInput.value,
+      dueDate: dueDate,
+      completed: false,
+      id: randomID,
+    };
+    todoList.push(newTodo);
+    // add new array to local storage
+    setLocalStorage();
 
-  // hide form
-  addForm();
+    // after pushing generate todo
+    generateTodo();
+    // clear form
+    todoTextInput.value = "";
+    todoDateInput.valueAsDate = null;
+
+    // hide form
+    addForm();
+  }
 };
 
 // ================ Edit functionality
 let editID = "";
 const editTodo = () => {
-  const dateObject = new Date(todoDateInput.value + "T00:00:00");
-  let dueDate = dateObject.toLocaleDateString();
-  todoList.map((todo) => {
-    if (todo.id == editID) {
-      (todo.todo = todoTextInput.value),
-        (todo.dueDate = dueDate),
-        (todo.completed = false),
-        (todo.id = editID);
-    }
-  });
-  // add new array to local storage
-  setLocalStorage();
+  if (todoTextInput.value === "" && todoDateInput.value === "") {
+    alert(`please input both: Todo and DueDate`);
+  } else if (todoTextInput.value === "") {
+    alert(`please type what is your Todo`);
+  } else if (todoDateInput.value === "") {
+    alert("Please input your due date for your task.");
+  } else {
+    const dateObject = new Date(todoDateInput.value + "T00:00:00");
+    let dueDate = dateObject.toLocaleDateString();
+    todoList.map((todo) => {
+      if (todo.id == editID) {
+        (todo.todo = todoTextInput.value),
+          (todo.dueDate = dueDate),
+          (todo.completed = false),
+          (todo.id = editID);
+      }
+    });
+    // add new array to local storage
+    setLocalStorage();
 
-  // clear form
-  todoTextInput.value = "";
-  todoDateInput.valueAsDate = null;
-  // generate items
-  generateTodo();
-  f;
-  // hideForm
-  addForm();
+    // clear form
+    todoTextInput.value = "";
+    todoDateInput.valueAsDate = null;
+    // generate items
+    generateTodo();
+    // hideForm
+    addForm();
+  }
 };
 
 addButtonSubmit.addEventListener("click", addForm);
@@ -174,22 +191,56 @@ listContainer.addEventListener("click", (e) => {
     todoList.map((todo, index) => {
       if (todo.id == e.target.parentNode.id) {
         todo.completed = true;
+        // remove the completed from the page
+        e.target.parentNode.remove();
       }
     });
     // update local storage
-    setLocalStorage()
-    console.log(localStorage.getItem("todoList"))
+    setLocalStorage();
+    console.log(localStorage.getItem("todoList"));
   }
 });
 
 //==================================== filter
 filterBTNS.addEventListener("click", (e) => {
-  console.log(e.target);
-  // filter by today
-  if (e.target.classList.contains("today-filter")) {
-    alert("click today");
+  // upcoming Filter=============
+  if (e.target.classList.contains("upcoming-filter")) {
+    generateTodo();
+  }
+
+  // ==============filter by completed
+  if (e.target.classList.contains("completed-filter-btn")) {
+    let completedTodo = todoList.filter((todo) => {
+      return todo.completed === true;
+    });
+    // append filter to page
+    listContainer.textContent = "";
+    completedTodo.map((todo) => {
+      if (todo.completed == true) {
+        let completedLi = todoTemplate(todo.todo, todo.dueDate, todo.id);
+        completedLi.classList.add("completed-todo");
+        listContainer.appendChild(completedLi);
+      }
+    });
+  }
+  //============== filter by today
+  // Create a new Date object representing the current date and time
+  const currentDate = new Date();
+  // Get the day of the month (1-31)
+  const day = currentDate.getDate();
+  // Get the month (0-11, so add 1 for the actual month number)
+  const month = currentDate.getMonth() + 1;
+  // Get the full year (e.g., 2025)
+  const year = currentDate.getFullYear();
+
+  if (e.target.classList.contains("today-filter-btn")) {
+    let todayTodo = todoList.filter((todo) => {
+      return todo.dueDate === `${month}/${day}/${year}`;
+    });
+    // append filter to page
+    listContainer.textContent = "";
+    todayTodo.map((todo) => {
+      listContainer.appendChild(todoTemplate(todo.todo, todo.dueDate, todo.id));
+    });
   }
 });
-
-// ===========filter
-
