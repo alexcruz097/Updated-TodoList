@@ -124,6 +124,7 @@ const createTodo = (e) => {
 // ================ Edit functionality
 let editID = "";
 const editTodo = () => {
+  console.log(todoDateInput.value);
   if (todoTextInput.value === "" && todoDateInput.value === "") {
     alert(`please input both: Todo and DueDate`);
   } else if (todoTextInput.value === "") {
@@ -237,10 +238,17 @@ filterBTNS.addEventListener("click", (e) => {
     let todayTodo = todoList.filter((todo) => {
       return todo.dueDate === `${month}/${day}/${year}`;
     });
-    // append filter to page
-    listContainer.textContent = "";
-    todayTodo.map((todo) => {
-      listContainer.appendChild(todoTemplate(todo.todo, todo.dueDate, todo.id));
-    });
+    // if there are no due date today
+    if (todayTodo.length === 0) {
+      listContainer.textContent = "Great! No due dates due today";
+    } else {
+      // append filter to page
+      listContainer.textContent = "";
+      todayTodo.map((todo) => {
+        listContainer.appendChild(
+          todoTemplate(todo.todo, todo.dueDate, todo.id)
+        );
+      });
+    }
   }
 });
