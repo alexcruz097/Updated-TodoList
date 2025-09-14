@@ -27,7 +27,9 @@
             id="211901516659"
             style="background-color: rgb(140, 65, 30)"
           >
-            Go to work<button class="editBTN">Edit</button>
+            Go to work<button class="editBTN">
+              <img src="./media/edit.png" />
+            </button>
             <p class="due-date">Due: 9/8/2025</p>
             <button class="deleteBTN">Delete</button>
           </li>
@@ -35,7 +37,7 @@
       </div>
       <form class="todo-form hide-form">
         <label for="todo">Add Todo</label>
-        <input type="text" name="todo" id="todo-form" required />
+        <input type="text" name="todo" id="todo-form" required maxlength="50" />
         <label for="date">Due Date</label>
         <input type="date" name="date" id="todo-date" required />
         <button class="add-btn">Create Todo</button>

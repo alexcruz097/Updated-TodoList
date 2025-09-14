@@ -74,11 +74,11 @@ body {
 }
 .todo {
   position: relative;
-  min-height: 20vh;
-  border-radius: 1rem;
+  min-height: 21vh;
+  width: 100%;
   color: white;
   list-style: none;
-  padding: 1rem;
+  padding-top: 3.3rem;
   background-color: #92a073;
   font-size: larger;
 }
@@ -108,28 +108,27 @@ body {
   position: absolute;
   top: 0rem;
   right: 0rem;
-  -webkit-border-top-right-radius: 12px;
   -webkit-border-bottom-left-radius: 12px;
-  -moz-border-radius-topright: 12px;
   -moz-border-radius-bottomleft: 12px;
-  border-top-right-radius: 12px;
   border-bottom-left-radius: 12px;
 }
 .completedBTN {
   position: absolute;
   bottom: 1rem;
   right: 1rem;
+  background-color: none;
+  border-radius: 1rem;
 }
 .due-date {
   position: absolute;
-  bottom: 4rem;
+  top: 0rem;
+  background-color: #7392a0;
+  -webkit-border-bottom-right-radius: 12px;
+  -moz-border-radius-bottomright: 12px;
+  border-bottom-right-radius: 12px;
   right: 4.5rem;
 }
-/* .due-date{
-  position: absolute;
-  top: 0;
-  left: 0;
-} */
+
 /* delete button styel */
 .deleteBTN,
 .cancel-form-btn {
@@ -141,23 +140,13 @@ body {
   right: 0;
 }
 .editBTN {
-  background-color: blue;
-  border: 1px solid blue;
-}
-.add-btn,
-.edit-btn {
-  background-color: blue;
-}
-.completedBTN {
-  background-color: rgb(140, 255, 127);
+  background-color: #fff;
   border: none;
+  border-radius: 50%;
 }
-.deleteBTN,
-.editBTN,
 .add-btn,
-.completedBTN,
-.cancel-form-btn,
 .edit-btn {
+  background-color: blue;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
   box-sizing: border-box;
   color: #ffffff;
@@ -177,6 +166,19 @@ body {
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: middle;
+}
+
+.deleteBTN,
+.editBTN,
+.add-btn,
+.completedBTN,
+.cancel-form-btn,
+.edit-btn {
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+
+  cursor: pointer;
+  display: inline-block;
 }
 
 .deleteBTN:active {

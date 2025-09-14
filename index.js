@@ -36,10 +36,12 @@ cancelForm.addEventListener("click", (e) => {
 });
 // =========template creation
 // create button
-const createBTN = (className, innerText) => {
+const createBTN = (className, imgPath) => {
   let createBTN = document.createElement("button");
   createBTN.classList.add(className);
-  createBTN.textContent = innerText;
+  const editIMG = document.createElement("img");
+  editIMG.src = imgPath;
+  createBTN.appendChild(editIMG);
   return createBTN;
 };
 
@@ -54,9 +56,10 @@ const todoTemplate = (todoTextInput, date, id) => {
   let Li = document.createElement("li");
   Li.classList.add("todo");
   // create edit/delete btn and p for date
-  let editBTN = createBTN("editBTN", "Edit");
+
+  let editBTN = createBTN("editBTN", "./media/edit.png");
   let deleteBTN = createBTN("deleteBTN", "X");
-  let completedBTN = createBTN("completedBTN", "Complete");
+  let completedBTN = createBTN("completedBTN", "./media/done.png");
   let p = document.createElement("p");
   p.classList.add("due-date");
   p.textContent = `Due: ${date}`;
@@ -67,6 +70,7 @@ const todoTemplate = (todoTextInput, date, id) => {
   Li.appendChild(p);
   Li.appendChild(deleteBTN);
   Li.appendChild(completedBTN);
+
   return Li;
 };
 //generate todo function
