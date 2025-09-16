@@ -1,16 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
-    <form >
-        <label for="name">Pokemon name:</label>
-        <input type="text" name="name" id="name" class="pokemon-name">
-        <button class="submitBTN">Submit</button>
-    </form>
+    <div class="container page-container">
+      <h1 class="text-center pb-5">Weather app</h1>
+      <div class="row">
+        <div class="map-container col card-mb-3">
+          <form class="card-body row">
+            <label for="exampleInputEmail1" class="form-label"
+              >City Name:</label
+            >
+            <div class="col-6">
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+              />
+            </div>
+
+            <div id="emailHelp" class="form-text">
+              Or use the map below to pick a city
+            </div>
+            <div class="col-7 pt-3">
+              <button type="button" class="btn btn-primary submitBTN">
+                Submit
+              </button>
+            </div>
+
+          </form>
+          <img
+            src="https://staticmapmaker.com/img/google-placeholder.png"
+            alt=""
+            class="card-img-bottom"
+            srcset=""
+          />
+        </div>
+
+        <div class="weather-container col">
+          <div class="name">Redcar, North Yorkshire, United Kingdon</div>
+          <div class="condition">
+            <img src="" alt="" srcset="" />
+            <p class="temperature">20C</p>
+          </div>
+          <div class="upcoming"></div>
+          <div>
+            <ul>
+              <li>
+                <p>Sat</p>
+                <img src="" alt="" srcset="" />
+                <p>14C</p>
+              </li>
+              <li>
+                <p>Sat</p>
+                <img src="" alt="" srcset="" />
+                <p>14C</p>
+              </li>
+              <li>
+                <p>Sat</p>
+                <img src="" alt="" srcset="" />
+                <p>14C</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+
     <script src="async.js"></script>
   </body>
 </html>
