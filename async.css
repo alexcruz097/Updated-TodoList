@@ -4,5 +4,28 @@
   box-sizing: border-box;
 }
 
-#map { height: 250px; }
+#map {
+  height: 250px;
+}
 
+.weather-container {
+  background-color: #0b121e;
+  color: white;
+  border-radius: 1rem;
+  padding: 1rem ;
+}
+.current-weather-img {
+  width: 100%;
+}
+
+.hourly-container {
+  background-color: #202b3c;
+  border-radius: 1rem;
+  width: 99%;
+}
+
+.condition-container {
+  background-color: #202b3c;
+  width: 99%;
+  border-radius: 1rem;
+}
