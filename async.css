@@ -12,7 +12,7 @@
   background-color: #0b121e;
   color: white;
   border-radius: 1rem;
-  padding: 1rem ;
+  padding: 1rem;
 }
 .current-weather-img {
   width: 100%;
@@ -28,4 +28,10 @@
   background-color: #202b3c;
   width: 99%;
   border-radius: 1rem;
+}
+.forecast-container {
+  background-color: #202b3c;
+  width: 99%;
+  border-radius: 1rem;
+  padding: 1rem;
 }
