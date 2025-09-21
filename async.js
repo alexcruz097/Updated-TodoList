@@ -2,6 +2,8 @@ const apiKey = "2581791d99f34ca0bc260840202008";
 const cityName = document.querySelector(".city-name");
 const submitBTN = document.querySelector(".submitBTN");
 const weatherContainer = document.querySelector(".weather-container");
+let forecastContainer = document.querySelector(".forecast-date-container");
+forecastContainer = "";
 // template literal
 const template = (data) => {
   return `<div class="name h3">${data.location.name}</div>
@@ -9,7 +11,9 @@ const template = (data) => {
    <div class="condition row align-items-center">
             <div class="col-6">
               <p class = "condition-text h3">${data.current.condition.text}</p>
-              <p>Chance of rain: ${data.forecast.forecastday[0].day.daily_chance_of_rain}%</p>
+              <p>Chance of rain: ${
+                data.forecast.forecastday[0].day.daily_chance_of_rain
+              }%</p>
               <p class="temperature h2">${data.current.feelslike_f}F</p>
             </div>
             <div class="col-6">
@@ -78,11 +82,15 @@ const template = (data) => {
                 
                 <div class="text-center">
                   <p>Chance of Rain</p>
-                  <h6>${data.forecast.forecastday[0].day.daily_chance_of_rain}%</h6>
+                  <h6>${
+                    data.forecast.forecastday[0].day.daily_chance_of_rain
+                  }%</h6>
                 </div>
                 <div class="text-center">
                   <p>Chance of Snow</p>
-                  <h6>${data.forecast.forecastday[0].day.daily_chance_of_snow}%</h6>
+                  <h6>${
+                    data.forecast.forecastday[0].day.daily_chance_of_snow
+                  }%</h6>
                 </div>
 
               </div>
@@ -99,105 +107,31 @@ const template = (data) => {
             </div>
           </div>
           <div class="col-12 d-flex flex-column mt-3 forecast-container">
-            <p>7-Day Forecast</p>
-            <div
+            <p>3-Day Forecast</p>
+            ${data.forecast.forecastday.forEach((day, index) => {
+              forecastContainer += ` <div
               class="border-bottom d-flex flex-fill justify-content-around align-items-center"
             >
-              <p class="forecast-date">Date:</p>
+              <p class="forecast-date">Date:${day.date}</p>
               <div class="d-flex flex-row align-items-center">
                 <img
                   class="d-flex"
-                  src="https://cdn.weatherapi.com/weather/64x64/night/113.png"
+                  src=${day.day.condition.icon}
                 />
                 <p class="forcase-weather">Sunny</p>
               </div>
-              <p>80/56</p>
-            </div>
-            <div
-              class="border-bottom d-flex flex-fill justify-content-around align-items-center"
-            >
-              <p class="forecast-date">Date:</p>
-              <div class="d-flex flex-row align-items-center">
-                <img
-                  class="d-flex"
-                  src="https://cdn.weatherapi.com/weather/64x64/night/113.png"
-                />
-                <p class="forcase-weather">Sunny</p>
-              </div>
-              <p>80/56</p>
-            </div>
-            <div
-              class="border-bottom d-flex flex-fill justify-content-around align-items-center"
-            >
-              <p class="forecast-date">Date:</p>
-              <div class="d-flex flex-row align-items-center">
-                <img
-                  class="d-flex"
-                  src="https://cdn.weatherapi.com/weather/64x64/night/113.png"
-                />
-                <p class="forcase-weather">Sunny</p>
-              </div>
-              <p>80/56</p>
-            </div>
-            <div
-              class="border-bottom d-flex flex-fill justify-content-around align-items-center"
-            >
-              <p class="forecast-date">Date:</p>
-              <div class="d-flex flex-row align-items-center">
-                <img
-                  class="d-flex"
-                  src="https://cdn.weatherapi.com/weather/64x64/night/113.png"
-                />
-                <p class="forcase-weather">Sunny</p>
-              </div>
-              <p>80/56</p>
-            </div>
-            <div
-              class="border-bottom d-flex flex-fill justify-content-around align-items-center"
-            >
-              <p class="forecast-date">Date:</p>
-              <div class="d-flex flex-row align-items-center">
-                <img
-                  class="d-flex"
-                  src="https://cdn.weatherapi.com/weather/64x64/night/113.png"
-                />
-                <p class="forcase-weather">Sunny</p>
-              </div>
-              <p>80/56</p>
-            </div>
-            <div
-              class="border-bottom d-flex flex-fill justify-content-around align-items-center"
-            >
-              <p class="forecast-date">Date:</p>
-              <div class="d-flex flex-row align-items-center">
-                <img
-                  class="d-flex"
-                  src="https://cdn.weatherapi.com/weather/64x64/night/113.png"
-                />
-                <p class="forcase-weather">Sunny</p>
-              </div>
-              <p>80/56</p>
-            </div>
-            <div
-              class="d-flex flex-fill justify-content-around align-items-center"
-            >
-              <p class="forecast-date">Date:</p>
-              <div class="d-flex flex-row align-items-center">
-                <img
-                  class="d-flex"
-                  src="https://cdn.weatherapi.com/weather/64x64/night/113.png"
-                />
-                <p class="forcase-weather">Sunny</p>
-              </div>
-              <p>80/56</p>
-            </div>
-            `;
+              <p>${day.day.maxtemp_f}/${day.day.mintemp_f}</p>
+            </div>;`;
+            })}
+      ${(forecastContainer.innerHTML = forecastContainer)}
+         </div>
+            `
 };
 
 const getWeather = async (lat, lang) => {
   try {
     const response = await fetch(
-      `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${lat},${lang}&aqi=no&alerts=no`
+      `http://api.weatherapi.com/v1/forecast.json?key=${apiKey}&q=${lat},${lang}&days=3&aqi=no&alerts=no`
     );
     if (!response.ok) {
       throw new Error("Could not fetch resources");
@@ -223,6 +157,7 @@ const getWeather = async (lat, lang) => {
 getWeather("34.2231026552273,-118.4499407360982");
 // add submitBTN
 submitBTN.addEventListener("click", () => {
+  forecastContainer = "";
   getWeather(cityName.value);
 
   // clear city name
@@ -247,6 +182,8 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 function onMapClick(e) {
   map.removeLayer(marker);
   // call function to get data
+  forecastContainer = "";
+
   getWeather(e.latlng.lat, e.latlng.lng);
   marker = L.marker([e.latlng.lat, e.latlng.lng]).addTo(map);
 }
